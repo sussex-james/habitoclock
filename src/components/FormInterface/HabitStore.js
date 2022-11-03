@@ -1,44 +1,37 @@
-import {observable} from "mobx";
+import {observable, action, makeAutoObservable} from "mobx";
 import {createContext} from "react";
-import ResettableStore from "./ResettableStore";
 
-class Habit extends ResettableStore {
+export default createContext(new class Habit {
     // if called before user logged in, won't find the user...
 
     constructor() {
-        super();
+        makeAutoObservable(this);
     }
 
-    @observable habit = '';
-    @observable insteadHabit = '';
+    habit = 'OG';
+    instead = 'asd'
+    habitCost = -1;
+    insteadHabit = -1;
+    whenUserDoes = [];
 
-    @observable habitCost = -1;
-    @observable insteadHabitCost = -1;
-
-    @observable whenUserDoesIt = observable.array([]);
-
-    @action addTime(timeRepresentation) {
-        this.whenUserDoesIt.push(timeRepresentation)
+    addTime = (timeRepresentation) => {
+        this.whenUserDoes.push(timeRepresentation)
     }
 
-    @action setHabit(to) {
+    setHabit = (to) => {
+        console.log('In store updating habit to: ', to)
         this.habit = to;
     }
 
-    @action setInsteadHabit(to) {
+    setInsteadHabit = (to) => {
         this.insteadHabit = to
     }
 
-    @action setHabitCost(to) {
+    setHabitCost = (to) => {
         this.habitCost = to;
     }
 
-    @action setInsteadHabitCost(to) {
+    setInsteadHabitCost = (to) => {
         this.insteadHabitCost = to
     }
-}
-
-
-export const userDataStaticInstance = new Habit();
-
-export default createContext(userDataStaticInstance)
+})

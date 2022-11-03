@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import HabitInformationForm from "./HabitInformationForm";
-import {HabitInformation} from "./HabitInformation.ts";
 
 
 export default () => {
@@ -19,22 +18,15 @@ export default () => {
 
     const [stage, setStage] = useState(STAGES.FIRST_GATHER_HABIT_DATA);
 
-    const [form, setForm] = useState(new HabitInformation());
-
-    useEffect(() => {
+    /*useEffect(() => {
         if (form.done) {
             setStage(STAGES.SECOND_PROCESS_DATA)
         }
-    }, [form])
-
-    useEffect(() => {
-        if (stage === STAGES.SECOND_PROCESS_DATA) {
-            // go call the APIs using form
-        }
-    }, [stage, form]);
+    }, [form])*/
 
     return(<div style={{padding:"15%"}}>
-        {stage === STAGES.FIRST_GATHER_HABIT_DATA && <HabitInformationForm setFormOnDone={(to) => setForm(to)} />}
+        Stage: {stage}
+        {stage === STAGES.FIRST_GATHER_HABIT_DATA && <HabitInformationForm  />}
         {stage === STAGES.SECOND_PROCESS_DATA && <div>Fetching results</div>}
         {stage === STAGES.THIRD_SHOW_RESULTS && <div>Results:</div>}
     </div>)

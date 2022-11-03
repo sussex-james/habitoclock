@@ -6,9 +6,9 @@ export interface TimeRepresentation {
 
 // Used this for a while but it was duplicating state a lot, so switched to Mobx Store with Context API
 
-// @deprecated
-// @deletable
-// @replacedBy './HabitStore.js'
+// deprecated
+// deletable
+// replacedBy './HabitStore.js'
 export class HabitInformation {
 
     habit: string = 'sd';

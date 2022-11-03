@@ -3,13 +3,13 @@ import { action, toJS } from 'mobx'
 export default class ResettableStore {
     _superInitialState = null
 
-    @action.bound
+    @action
     setInitialState() {
         this._superInitialState = toJS(this)
         this._superAsConstructed = this
     }
 
-    @action.bound
+    @action
     reset() {
         if (!this._superInitialState) {
             console.warn('reset() does not work unless you call this.setInitialState() at the end of the constructor.')
