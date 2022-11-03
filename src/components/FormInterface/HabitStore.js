@@ -2,6 +2,7 @@ import {observable, action, makeAutoObservable, runInAction} from "mobx";
 import {createContext} from "react";
 import {CarbonUsageService} from "../../services/CarbonUsage";
 import {GenerateTextService} from "../../services/GenerateText";
+import {WattUsageAndEmojisService} from "../../services/WattUsageAndEmojis";
 
 export default createContext(new class Habit {
 
@@ -27,7 +28,8 @@ export default createContext(new class Habit {
     processIntoResults = (onDone) => {
         console.log('Processing results.')
         runInAction(async () => { // Get Async context
-            const waitUsage = results.map((item) => item.watt)
+            const results = await WattUsageAndEmojisService.getWattUsageAndEmojis(this.routineItems.map((item) => item.description))
+            const wattUsage = results.map((item) => item.watt)
             const emojis = results.map((item) => item.emoji)
 
         this.results = await Promise.all(this.routineItems.map(async (item, ind) => {

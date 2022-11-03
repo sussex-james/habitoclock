@@ -31,7 +31,7 @@ export const CarbonUsageService = {
             return 450 * kwAmount // Safe default.
         })
 
-    }
+    },
 
     async getBestUsageOfKW(time, kwAmount=1) {
         console.log('Carbon Usage at time: ', time);
