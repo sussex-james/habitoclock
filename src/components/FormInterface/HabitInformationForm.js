@@ -8,6 +8,9 @@ export default observer(({onDone}) => {
     const habitInformation = useContext(HabitStore);
 
     const [currentTime, setCurrentTime] = useState({hour: null, minute: null})
+    // We could tie times to specific habits and have multiple habits.
+    // This did use typescript TimeRepresentation before but TS is difficult to configure without ejecting react which
+    // isn't worthwhile for the purpose of the hakacthon.
 
     useEffect(() => {
         console.log('The current time has changed.', currentTime)
@@ -26,7 +29,8 @@ export default observer(({onDone}) => {
         <small style={{color:"grey"}}>e.g. 🥛 "drink milk", 🏋️ "go to gym", 🎨 "learn to paint" <span style={{opacity:0}}>{habitInformation.habit}</span></small>
         <br /><br />
 
-       <div style={{opacity: habitInformation.habit === '' ? 0.1 : 1}}>What will you stop doing e.g. drinking coffee, watching TV, gaming {habitInformation.insteadHabitCost != -1 && <span>This habit uses {habitInformation.insteadHabitCost} Carbon g/kwh</span>}
+       <div style={{opacity: habitInformation.habit === '' ? 0.1 : 1}}>What will you stop doing
+           {habitInformation.insteadHabitCost != -1 && <span>This habit uses {habitInformation.insteadHabitCost} Carbon g/kwh</span>}
             <Input placeholder="Habit you'll stop" onChange={(e) => habitInformation.setInsteadHabit(e.target.value)} /><br />
             <small style={{color:"grey"}}>e.g. ☕ "drink coffee", 📺 "watch TV", 🎮 "gaming"</small>
 

@@ -17,13 +17,16 @@ export const GenerateTextService = {
      * @param usersTranscriptSentence - string, may be incorrect
      * @returns {Promise<void>}
      */
-    async getCorrectFormOfSentence(usersTranscriptSentence) {
+    async getWattUsageEstimate(habitAction='drink a coffee') {
 
         const completion = await openai.createCompletion({
             model: "text-davinci-002",
-            prompt: "Correct this sentence: " + usersTranscriptSentence.toString() + "\n\nCorrected to:",
+            maxTokens: 3
+            prompt: "For each habit below, estimate the watt usage doing that for 10 minutes.\n\nHabit: drink coffee\nWatt usage: 150\n" +
+                "Habit: gaming\nWatt usage: 30\n" +
+                "Habit: " + habitAction +"\nWatt usage:",
         });
-        return completion.data.choices[0].text
+        return parseInt(completion.data.choices[0].text.strip(' ')) // should be a number
     }
 
 }

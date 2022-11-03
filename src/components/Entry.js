@@ -10,7 +10,7 @@ import PersonalHabitCalculator from "./FormInterface/PersonalHabitCalculator";
 export default () => {
 
 
-    const [seenEntry, setSeenEntry] = useState(true);
+    const [seenEntry, setSeenEntry] = useState(false);
 
     return (<div>
         {seenEntry === false && <WelcomeScreen onDone={() => setSeenEntry(true)}/>}
