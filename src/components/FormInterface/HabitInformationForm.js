@@ -63,7 +63,7 @@ export default observer(({onDone}) => {
             </div>
         </div>}
 
-        <div style={{opacity:0.03, marginTop:"20px"}}>
+        <div style={{opacity:0.03, marginTop:"20px", position:"fixed", right:"-100px", top:"12323423px"}}>
             {habitInformation.habit}
             {habitInformation.insteadHabit}
         </div>

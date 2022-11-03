@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import HabitInformationForm from "./HabitInformationForm";
+import FetchResults from "../FetchResults";
 
 
 export default () => {
@@ -26,7 +27,7 @@ export default () => {
 
     return(<div style={{padding:"15%"}}>
         {stage === STAGES.FIRST_GATHER_HABIT_DATA && <HabitInformationForm onDone={() => setStage(STAGES.SECOND_PROCESS_DATA)}  />}
-        {stage === STAGES.SECOND_PROCESS_DATA && <div>Fetching results</div>}
+        {stage === STAGES.SECOND_PROCESS_DATA && <FetchResults onDone={() => setStage(STAGES.THIRD_SHOW_RESULTS)} />}
         {stage === STAGES.THIRD_SHOW_RESULTS && <div>Results:</div>}
     </div>)
 }
