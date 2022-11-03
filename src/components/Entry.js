@@ -14,7 +14,7 @@ export default () => {
 
     return (<div>
         {seenEntry === false && <WelcomeScreen onDone={() => setSeenEntry(true)}/>}
-        {seenEntry && <div><h1>Calculator</h1><PersonalHabitCalculator/></div>}
+        {seenEntry && <div><PersonalHabitCalculator/></div>}
     </div>)
 
 }

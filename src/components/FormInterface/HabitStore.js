@@ -8,10 +8,10 @@ export default createContext(new class Habit {
         makeAutoObservable(this);
     }
 
-    habit = 'OG';
-    instead = 'asd'
+    habit = ''
+    insteadHabit = ''
     habitCost = -1;
-    insteadHabit = -1;
+    insteadHabitCost = -1;
     whenUserDoes = [];
 
     addTime = (timeRepresentation) => {

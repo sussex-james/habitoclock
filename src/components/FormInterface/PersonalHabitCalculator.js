@@ -25,8 +25,7 @@ export default () => {
     }, [form])*/
 
     return(<div style={{padding:"15%"}}>
-        Stage: {stage}
-        {stage === STAGES.FIRST_GATHER_HABIT_DATA && <HabitInformationForm  />}
+        {stage === STAGES.FIRST_GATHER_HABIT_DATA && <HabitInformationForm onDone={() => setStage(STAGES.SECOND_PROCESS_DATA)}  />}
         {stage === STAGES.SECOND_PROCESS_DATA && <div>Fetching results</div>}
         {stage === STAGES.THIRD_SHOW_RESULTS && <div>Results:</div>}
     </div>)
