@@ -17,7 +17,7 @@ export const CarbonUsageService = {
         // rpely with it.
         const startTime = '2022-03-01T' + time.hour + '%3A' + time.minute + '%3A00Z';
 
-        const url = 'https://carbon-aware-api.azurewebsites.net/emissions/bylocations/best?location=eastus&time=' + startTime;
+        const url = 'https://carbon-aware-api.azurewebsites.net/emissions/bylocations?location=eastus&time=' + startTime;
 
         fetch(url).then((response) => response.json()).then((data) => {
             console.log('Full data was: ', data)
@@ -29,6 +29,29 @@ export const CarbonUsageService = {
         }).catch((e) => {
             console.error(e);
             return 450 * kwAmount // Safe default.
+        })
+
+    }
+
+    async getBestUsageOfKW(time, kwAmount=1) {
+        console.log('Carbon Usage at time: ', time);
+        console.log('For KW amount: ', kwAmount);
+        // rpely with it.
+        const startTime = '2022-03-01T00%3A00%3A00Z';
+        const endTime = '2022-03-02T00%3A00%3A00Z';
+
+        const url = 'https://carbon-aware-api.azurewebsites.net/emissions/bylocations/best?location=eastus&time=' + startTime +'&toTime=' + endTime;
+
+        fetch(url).then((response) => response.json()).then((data) => {
+            console.log('Full data was: ', data)
+            console.log('Data.0 was: ', data[0])
+            console.log(data[0]['rating']);
+            const dirtyCarbonUsageInGramsAtThisTime = data[0]['rating'] * kwAmount;
+            // use variable to be explicit about the value.
+            return dirtyCarbonUsageInGramsAtThisTime
+        }).catch((e) => {
+            console.error(e);
+            return 380 * kwAmount // Safe default.
         })
 
     }
