@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from "react";
-import { Input, Button, Badge } from '@chakra-ui/react'
+import { Input, Button, Badge, Heading } from '@chakra-ui/react'
 import {observer} from "mobx-react";
 import HabitStore from "./HabitStore";
 
@@ -24,37 +24,43 @@ export default observer(({onDone}) => {
     // that way we can calculate the negative or positive impact of habits. Running for example has no impact.
     // so user learns as they use the application too.
 
-    return(<div style={{fontSize:"150%"}}><h1>Add your Routine</h1>
+    return(<div style={{fontSize:"150%"}}>
 
-        <h1>What is the activity?</h1>
-        <Input placeholder="" onChange={(e) => setCurrentActivity(e.target.value)}/>
-        <br />
-        <small style={{color:"grey"}}>e.g. 🥛 "drink milk", 🏋️ "go to gym", 🎨 "learn to paint"</small>
-       <div>
-           <br />
-        When do you do it?<br />
+        <Heading>Add Routine Items</Heading>
+        <div style={{marginTop:"20px"}}>
+            <label>Activity name:</label>
+            <Input label="Activity" placeholder="" onChange={(e) => setCurrentActivity(e.target.value)}/>
+            <br />
+            <small style={{color:"grey"}}>e.g. 🥛 "drink milk", 🏋️ "go to gym", 🎨 "learn to paint"</small>
+            <div>
+               <br />
+            Activity time of day:<br />
 
-            <div style={{padding:"10px", border: "1px solid lightgrey"}}>
-                <input type="time" id="habit2" name="habit2" required onChange={(e) => {
-                    var date = e.target.value.split(':');
+                <div style={{padding:"10px", border: "1px solid lightgrey"}}>
+                    <input type="time" id="habit2" name="habit2" required onChange={(e) => {
+                        var date = e.target.value.split(':');
 
-                    var hours = date[0];
-                    var minutes = date[1];
-                    setCurrentTime({hour: hours, minute: minutes})
-                }} />
-            </div>
-            <small style={{color:"lightgrey", marginBottom:"10px"}}>
-                e.g. If you drink coffee at 9, 12 and 3pm, add 09:00 first and then you can add more.
-            </small>
-           <br />
-           <Button onClick={() => {
-               habitInformation.addRoutineItem({ description: currentActivity,
-                   timeRepresentation: { hour: currentTime.hour, minute: currentTime.minute}})
-           }}>
-               Add this routine item
-           </Button>
+                        var hours = date[0];
+                        var minutes = date[1];
+                        setCurrentTime({hour: hours, minute: minutes})
+                    }} />
+                </div>
+                <small style={{color:"lightgrey", marginBottom:"10px"}}>
+                    e.g. If you drink coffee at 9, 12 and 3pm, add 09:00 first and then you can add more.
+                </small>
+               <div style={{marginTop:"10px"}}>
+                   <Button colorScheme={habitInformation.routineItems.length > 1 ? 'grey' : 'green'} onClick={() => {
+                       habitInformation.addRoutineItem({ description: currentActivity,
+                           timeRepresentation: { hour: currentTime.hour, minute: currentTime.minute}})
+                       setCurrentActivity('')
+                       setCurrentTime({hour: '00', minute: '00'})
+                   }}>
+                       Add this routine item
+                   </Button>
+               </div>
+           </div>
 
-            <div style={{padding: "10px", backgroundColor:"rgb(240,240,240)", borderRadius:"15px", margin:"10px", marginTop:"50px"}}>
+            <div hidden={habitInformation.routineItems.length === 0 } style={{padding: "10px", backgroundColor:"rgb(240,240,240)", borderRadius:"15px", margin:"10px", marginTop:"50px"}}>
                 <h2>Routine</h2>
                 {habitInformation.routineItems.slice().sort((a, b) => a.timeRepresentation.hour < b.timeRepresentation.hour)
                     .map((routineItem) =>
@@ -62,9 +68,9 @@ export default observer(({onDone}) => {
             </div>
 
             <div style={{float:"right"}}>
-                {habitInformation.routineItems.length > 1 ?
-                <Button colorScheme="green" onClick={() => onDone()}>Suggest optimal changes!</Button>
-                    : <Badge>(add at least two times to calculate optimal changes)</Badge>}
+                {habitInformation.routineItems.length > 1
+                    ? <Button colorScheme="green" size='lg' onClick={() => onDone()}>Show Routine Insights</Button>
+                    : <span style={{color:"grey"}}></span>}
             </div>
         </div>
     </div>)

@@ -29,7 +29,8 @@ export default createContext(new class Habit {
         console.log('Processing results.')
         runInAction(async () => { // Get Async context
             const results = await WattUsageAndEmojisService.getWattUsageAndEmojis(this.routineItems.map((item) => item.description))
-            const wattUsage = results.map((item) => item.watt)
+            console.log('results were; ', results)
+            const wattUsage = results.map((item) => item.watts)
             const emojis = results.map((item) => item.emoji)
 
         this.results = await Promise.all(this.routineItems.map(async (item, ind) => {
@@ -47,16 +48,25 @@ export default createContext(new class Habit {
 
             // best usually lower than usage.
             // 400 / 600 = 0.66 = 33% saving from peak.
-            const percentageDifference =  1 - (best / usage)
+            let percentageDifference =  1 - (best / usage)
 
-            return({
+            if (percentageDifference < 0) {
+                percentageDifference = 0
+            }
+
+            const output = {
                 ...item, // description + timeRepresentation
                 'name': item.description,
-                'usage': 10, //usage,
-                'watts': 50, // watts,
+                'usage': usage,
+                'watts': watts,
+                'best': best,
                 'emoji': emoji,
-                'percentageDifference': 0.15, // percentageDifference
-            })
+                'percentageDifference': percentageDifference,// percentageDifference
+            }
+
+            console.log('Output was: ', output)
+
+            return(output)
 
         }))
         onDone()
