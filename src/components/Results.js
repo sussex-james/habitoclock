@@ -1,3 +1,5 @@
+import React, { useEffect} from "react";
+import { toJS } from "mobx"
 import {
   BarChart,
   Bar,
@@ -10,7 +12,12 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const Results = () => {
+const Results = ({results}) => {
+
+  useEffect(() => {
+    console.log('Results: ', toJS(results))
+  }, [])
+
   //   ...item, // description + timeRepresentation
   //                 'usage': usage,
   //                 'watts': watts,

@@ -51,10 +51,11 @@ export default createContext(new class Habit {
 
             return({
                 ...item, // description + timeRepresentation
-                'usage': usage,
-                'watts': watts,
+                'name': item.description,
+                'usage': 10, //usage,
+                'watts': 50, // watts,
                 'emoji': emoji,
-                'percentageDifference': percentageDifference
+                'percentageDifference': 0.15, // percentageDifference
             })
 
         }))

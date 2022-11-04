@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useState, useEffect} from "react";
 import HabitInformationForm from "./HabitInformationForm";
 import FetchResults from "./../FetchResults";
 import Results from "./../Results";
+import HabitStore from "./HabitStore";
 
-export default () => {
+import {observer} from "mobx-react";
+
+export default observer(() => {
+
+    const habitInformation = useContext(HabitStore);
   // Manages the UI, whether to show form, loading, or results.
 
   // Based on state changes (form done etc), calls the Carbon APi to get data.
@@ -36,9 +41,9 @@ export default () => {
       )}
       {stage === STAGES.THIRD_SHOW_RESULTS && (
         <div>
-          <Results />
+          <Results results={habitInformation.results}/>
         </div>
       )}
     </div>
   );
-};
+});
