@@ -1,22 +1,23 @@
-
-import {remoteUrl} from '../config/SECRET'
+//import {remoteUrl} from '../config/secret.js'
+const remoteUrl = "https://quizscribe.com:3002/logicPythonSpecial/directText";
 
 export const WattUsageAndEmojisService = {
-
-    async getWattUsageAndEmojis(topics) {
-        return await fetch(remoteUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ topics: topics})
-        }).then((resp) => {
-            console.log('Response was: ', resp)
-            return resp.json()
-        }).then((json) => {
-            console.log('JSON: ', json)
-            console.log(json.result)
-            return json.result
-        })
-    }
-}
+  async getWattUsageAndEmojis(topics) {
+    return await fetch(remoteUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ topics: topics }),
+    })
+      .then((resp) => {
+        console.log("Response was: ", resp);
+        return resp.json();
+      })
+      .then((json) => {
+        console.log("JSON: ", json);
+        console.log(json.result);
+        return json.result;
+      });
+  },
+};
