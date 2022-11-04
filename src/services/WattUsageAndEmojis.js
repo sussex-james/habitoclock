@@ -1,15 +1,22 @@
 
+import {remoteUrl} from '../config/SECRET'
+
 export const WattUsageAndEmojisService = {
 
     async getWattUsageAndEmojis(topics) {
-        const remoteUrl = 'secret'
-        return fetch(remoteUrl, {
+        return await fetch(remoteUrl, {
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ topics: topics})
-        }).then((resp) => resp.json().results)
+        }).then((resp) => {
+            console.log('Response was: ', resp)
+            return resp.json()
+        }).then((json) => {
+            console.log('JSON: ', json)
+            console.log(json.result)
+            return json.result
+        })
     }
 }

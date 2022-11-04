@@ -1,18 +1,28 @@
 import React, {useState} from "react";
 import Hero from "./Hero";
+import {WattUsageAndEmojisService} from "../services/WattUsageAndEmojis";
 
 import {
-    Flex,
+    Flex, Button
 } from "@chakra-ui/react";
 import PersonalHabitCalculator from "./FormInterface/PersonalHabitCalculator";
+
 
 
 export default () => {
 
 
     const [seenEntry, setSeenEntry] = useState(false);
+    const [sampleOutput, setSampleOutput] = useState([])
 
     return (<div>
+        <Button onClick={async () => setSampleOutput(await WattUsageAndEmojisService.getWattUsageAndEmojis(["cycling", "cooking roast dinner"])) }>Test Watt Usage</Button>
+        {sampleOutput.length > 0 && <div><h1>Samples</h1>
+        <p>
+            {sampleOutput.map((sample) => <div>{sample.topic + ' has emoji: ' + sample.emoji + ' and watt usage for 10 mins: ' +  sample.watts}</div>)}
+        </p>
+        </div>}
+
         {seenEntry === false && <WelcomeScreen onDone={() => setSeenEntry(true)}/>}
         {seenEntry && <div><PersonalHabitCalculator/></div>}
     </div>)
