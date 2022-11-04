@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from "react";
-import { Input, Button, Badge, Heading } from '@chakra-ui/react'
+import { Input, Button, Badge, Heading, Box } from '@chakra-ui/react'
 import {observer} from "mobx-react";
 import HabitStore from "./HabitStore";
 
@@ -29,7 +29,7 @@ export default observer(({onDone}) => {
         <Heading>Add Routine Items</Heading>
         <div style={{marginTop:"20px"}}>
             <label>Activity name:</label>
-            <Input label="Activity" placeholder="" onChange={(e) => setCurrentActivity(e.target.value)}/>
+            <Input autoFocus={true} label="Activity" placeholder="" value={currentActivity} onChange={(e) => setCurrentActivity(e.target.value)}/>
             <br />
             <small style={{color:"grey"}}>e.g. 🥛 "drink milk", 🏋️ "go to gym", 🎨 "learn to paint"</small>
             <div>
@@ -49,22 +49,28 @@ export default observer(({onDone}) => {
                     e.g. If you drink coffee at 9, 12 and 3pm, add 09:00 first and then you can add more.
                 </small>
                <div style={{marginTop:"10px"}}>
-                   <Button colorScheme={habitInformation.routineItems.length > 1 ? 'grey' : 'green'} onClick={() => {
+                   <Button colorScheme={habitInformation.routineItems.length > 1 ? 'gray' : 'green'} onClick={() => {
+                       if (currentActivity.length === 0) {
+                           alert("Please enter the activity")
+                           return false;
+                       }
+
                        habitInformation.addRoutineItem({ description: currentActivity,
                            timeRepresentation: { hour: currentTime.hour, minute: currentTime.minute}})
                        setCurrentActivity('')
-                       setCurrentTime({hour: '00', minute: '00'})
                    }}>
                        Add this routine item
                    </Button>
                </div>
            </div>
 
-            <div hidden={habitInformation.routineItems.length === 0 } style={{padding: "10px", backgroundColor:"rgb(240,240,240)", borderRadius:"15px", margin:"10px", marginTop:"50px"}}>
-                <h2>Routine</h2>
-                {habitInformation.routineItems.slice().sort((a, b) => a.timeRepresentation.hour < b.timeRepresentation.hour)
+            <div hidden={habitInformation.routineItems.length === 0 } style={{padding: "10px", backgroundColor:"white", border: "1px solid lightgrey", borderRadius:"15px", margin:"10px", marginTop:"50px"}}>
+                <Heading>Your Routine</Heading>
+                <div style={{marginTop:"10px"}}>
+                {habitInformation.routineItems.slice().sort((a, b) => a.timeRepresentation.hour > b.timeRepresentation.hour)
                     .map((routineItem) =>
-                    <div><Badge>{routineItem.timeRepresentation.hour}:{routineItem.timeRepresentation.minute}&nbsp; {routineItem.description}</Badge></div>)}
+                    <div style={{backgroundColor:"#97baea", marginTop:"5px", padding:"10px", color: "white", borderRadius:"10px"}}>{routineItem.timeRepresentation.hour}:{routineItem.timeRepresentation.minute}&nbsp; {routineItem.description}</div>)}
+                </div>
             </div>
 
             <div style={{float:"right"}}>

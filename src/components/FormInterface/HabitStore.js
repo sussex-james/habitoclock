@@ -33,11 +33,41 @@ export default createContext(new class Habit {
             const wattUsage = results.map((item) => item.watts)
             const emojis = results.map((item) => item.emoji)
 
+            const changeHours = (time, change) => {
+                console.log('Output: Changing hours of time: ', time, ' by changing: ', change, ' with specific hour: ', time.hour)
+                const newTime = {...time, hour: ((parseInt(time.hour) + parseInt(change)) % 24)}
+                if (newTime.hour.toString().length === 1) {
+                    // convert to 2 digit format as timezone requires that.
+                    newTime.hour = '0' + newTime.hour.toString()
+                }
+                console.log('Output: Time of ', newTime)
+                return (newTime)
+            }
+
         this.results = await Promise.all(this.routineItems.map(async (item, ind) => {
             const watts = wattUsage[ind]
             const emoji = emojis[ind]
             const usage = await CarbonUsageService.getUsageOfKW(item.timeRepresentation, Math.ceil(watts/1000))
-            const best = await CarbonUsageService.getBestUsageOfKW(item.timeRepresentation, Math.ceil(watts/1000))
+
+            // todo: Refactor into loop
+            const hourModifications = [-3, -1, +1, +3]
+            // we need to destructure item.timeRepresentation so it does not pass by reference. And changeHours to safely % 24 into 24 hour form.
+            const minus3 = await CarbonUsageService.getUsageOfKW(changeHours({...item.timeRepresentation}, hourModifications[0]), Math.ceil(watts/1000))
+            const minus1 = await CarbonUsageService.getUsageOfKW(changeHours({...item.timeRepresentation}, hourModifications[1]), Math.ceil(watts/1000))
+            const plus1 = await CarbonUsageService.getUsageOfKW(changeHours({...item.timeRepresentation}, hourModifications[2]), Math.ceil(watts/1000))
+            const plus3 = await CarbonUsageService.getUsageOfKW(changeHours({...item.timeRepresentation}, hourModifications[3]), Math.ceil(watts/1000))
+
+            const alternates = [minus3,  minus1, plus1, plus3]
+
+            console.log('Output alternates: ', alternates)
+
+            let indexOfArgMin = alternates.indexOf(Math.min(...alternates));
+
+            const best = alternates[indexOfArgMin]
+
+            const bestTime = parseInt(item.timeRepresentation.hour) + parseInt(hourModifications[indexOfArgMin])
+
+            //const best = await CarbonUsageService.getBestUsageOfKW(item.timeRepresentation, Math.ceil(watts/1000))
             // Could also await StableDiffusion or emoji representation here.
             // item = { 'description': 'Drink coffee', 'timeRepresentation': { 'hour': 11, 'second': 60 } }
 
@@ -49,6 +79,8 @@ export default createContext(new class Habit {
             // best usually lower than usage.
             // 400 / 600 = 0.66 = 33% saving from peak.
             let percentageDifference =  1 - (best / usage)
+            console.log('Output best /usage: ', best, usage)
+            console.log('Output hours change: ', changeHours({hour: 23, minute: 15}, +1))
 
             if (percentageDifference < 0) {
                 percentageDifference = 0
@@ -60,6 +92,7 @@ export default createContext(new class Habit {
                 'usage': usage,
                 'watts': watts,
                 'best': best,
+                'bestTime': bestTime,
                 'emoji': emoji,
                 'percentageDifference': percentageDifference,// percentageDifference
             }
