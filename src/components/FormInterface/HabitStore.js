@@ -65,7 +65,7 @@ export default createContext(new class Habit {
 
             const best = alternates[indexOfArgMin]
 
-            const bestTime = parseInt(item.timeRepresentation.hour) + parseInt(hourModifications[indexOfArgMin])
+            const bestTime = (parseInt(item.timeRepresentation.hour) + parseInt(hourModifications[indexOfArgMin])).toString() + ':00'
 
             //const best = await CarbonUsageService.getBestUsageOfKW(item.timeRepresentation, Math.ceil(watts/1000))
             // Could also await StableDiffusion or emoji representation here.
