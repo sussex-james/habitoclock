@@ -30,7 +30,7 @@ export default observer(() => {
     }, [form])*/
 
   return (
-    <div style={{ padding: "15%" }}>
+    <div style={{ padding: "12% 20%" }}>
       {stage === STAGES.FIRST_GATHER_HABIT_DATA && (
         <HabitInformationForm
           onDone={() => setStage(STAGES.SECOND_PROCESS_DATA)}

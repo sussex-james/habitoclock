@@ -19,12 +19,13 @@ export const CarbonUsageService = {
 
         const url = 'https://carbon-aware-api.azurewebsites.net/emissions/bylocations?location=eastus&time=' + startTime;
 
-        fetch(url).then((response) => response.json()).then((data) => {
+        return await fetch(url).then((response) => response.json()).then((data) => {
             console.log('Full data was: ', data)
             console.log('Data.0 was: ', data[0])
             console.log(data[0]['rating']);
             const dirtyCarbonUsageInGramsAtThisTime = data[0]['rating'] * kwAmount;
             // use variable to be explicit about the value.
+            console.log('Returning: ', dirtyCarbonUsageInGramsAtThisTime)
             return dirtyCarbonUsageInGramsAtThisTime
         }).catch((e) => {
             console.error(e);
@@ -42,7 +43,7 @@ export const CarbonUsageService = {
 
         const url = 'https://carbon-aware-api.azurewebsites.net/emissions/bylocations/best?location=eastus&time=' + startTime +'&toTime=' + endTime;
 
-        fetch(url).then((response) => response.json()).then((data) => {
+        return await fetch(url).then((response) => response.json()).then((data) => {
             console.log('Full data was: ', data)
             console.log('Data.0 was: ', data[0])
             console.log(data[0]['rating']);

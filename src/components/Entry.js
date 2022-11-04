@@ -36,8 +36,8 @@ const WelcomeScreen = ({onDone}) => <div>
         m="0 auto"
     >
         <Hero
-            title="Motivate yourself to achieve better habits by helping the environment"
-            subtitle="Reduce your Carbon Footprint by purposefully choosing which times to change your habits for the most green impact"
+            title="Get insights on your routines Carbon Impact"
+            subtitle="Reduce your Carbon Footprint by purposefully choosing which times to change your routine for the most green impact"
             image="https://source.unsplash.com/collection/404339/800x600"
             ctaText="Help me reduce my footprint"
             ctaOnClick={() => onDone()}

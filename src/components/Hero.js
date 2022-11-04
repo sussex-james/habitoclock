@@ -10,6 +10,18 @@ import {
     Text
 } from "@chakra-ui/react";
 
+/**
+ * This generic component is from a CodePen on using Chokra splash pages so we can have a clear explainer
+ * It's not a major part of the project.
+ * @param title
+ * @param subtitle
+ * @param image
+ * @param ctaText
+ * @param ctaOnClick
+ * @param rest
+ * @returns {*}
+ * @constructor
+ */
 export default function Hero({
                                  title,
                                  subtitle,
@@ -19,6 +31,7 @@ export default function Hero({
                                  ...rest
                              }) {
     return (
+        <div>
         <Flex
             align="center"
             justify={{ base: "center", md: "space-around", xl: "space-between" }}
@@ -61,7 +74,7 @@ export default function Hero({
                         py="4"
                         px="4"
                         lineHeight="1"
-                        size="md"
+                        size="lg"
                     >
                         {ctaText}
                     </Button>
@@ -80,6 +93,10 @@ export default function Hero({
                 <Image src={image} size="100%" rounded="1rem" shadow="2xl" />
             </Box>
         </Flex>
+            <div style={{margin: "0 auto", backgroundColor:"rgb(240,255,240)", padding:"20px", fontSize:"130%",alignText:"center"}}>
+                ☕ Did you know a coffee at <b>3pm uses 20% more carbon</b> (g/kwH) than at 11am?
+            </div>
+        </div>
     );
 }
 
