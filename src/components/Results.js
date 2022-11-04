@@ -1,5 +1,5 @@
-import React, { useEffect} from "react";
-import { toJS } from "mobx"
+import React, { useEffect } from "react";
+import { toJS } from "mobx";
 import {
   BarChart,
   Bar,
@@ -12,11 +12,21 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const Results = ({results}) => {
-
+const Results = ({ results }) => {
   useEffect(() => {
-    console.log('Results: ', toJS(results))
-  }, [])
+    console.log("Results: ", toJS(results));
+  }, []);
+
+  // { usage: 10, watts: 50, emoji: ")", … }
+  // description: ""
+  // emoji: ")"
+  // name: ""
+  // percentageDifference: 0.15
+  // timeRepresentation: Object { hour: null, minute: null }
+  // hour: null
+  // minute: null
+  // usage: 10
+  // watts: 50
 
   //   ...item, // description + timeRepresentation
   //                 'usage': usage,
@@ -30,24 +40,30 @@ const Results = ({results}) => {
   let data2 = { name: "gym 13:00", value: 200 };
   let data3 = { name: "gaming 09:00", value: 900 };
 
-  const data = [
-    {
-      name: "coffee 12:00",
-      carbon: 400,
-    },
-    {
-      name: "gym 13:00",
-      carbon: 200,
-    },
-    {
-      name: "gaming 09:00",
-      carbon: 900,
-    },
-    {
-      name: "gaming 09:00",
-      carbon: 900,
-    },
-  ];
+  let barData = [];
+  results.map((item) => barData.push({ name: item.name, carbon: item.usage }));
+
+  let tableData = [];
+  // just in render - nested map
+
+  // const data = [
+  //   {
+  //     name: "coffee 12:00",
+  //     carbon: 400,
+  //   },
+  //   {
+  //     name: "gym 13:00",
+  //     carbon: 200,
+  //   },
+  //   {
+  //     name: "gaming 09:00",
+  //     carbon: 900,
+  //   },
+  //   {
+  //     name: "gaming 09:00",
+  //     carbon: 900,
+  //   },
+  // ];
 
   // sort data into descending (or maybe sort by time option)
 
@@ -61,7 +77,7 @@ const Results = ({results}) => {
           syncId="anyId"
           width={500}
           height={300}
-          data={data}
+          data={barData}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="number" />
