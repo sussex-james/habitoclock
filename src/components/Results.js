@@ -86,7 +86,7 @@ const Results = ({ results }) => {
       </div>
       <div class="flex">
         <ResponsiveContainer width="60%" height={500}>
-          <RadarChart cx="45%" cy="50%" outerRadius="85%" data={barData}>
+          <RadarChart cx="45%" cy="50%" outerRadius="85%" data={radarData}>
             <PolarGrid />
             <PolarAngleAxis dataKey="name" />
             <PolarRadiusAxis />
