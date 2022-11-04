@@ -14,6 +14,10 @@ export const CarbonUsageService = {
     async getUsageOfKW(time, kwAmount=1) {
         console.log('Carbon Usage at time: ', time);
         console.log('For KW amount: ', kwAmount);
+        if (kwAmount === 0){
+            // Apparently a non-carbon activity so set to minor amount.
+            return 0.1
+        }
         // rpely with it.
         const startTime = '2022-03-01T' + time.hour + '%3A' + time.minute + '%3A00Z';
 

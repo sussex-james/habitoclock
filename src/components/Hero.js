@@ -78,15 +78,6 @@ export default function Hero({
                     >
                         {ctaText}
                     </Button>
-                <Text
-                    fontSize="xs"
-                    mt={2}
-                    textAlign="center"
-                    color="primary.800"
-                    opacity="0.6"
-                >
-                    (That's not a pun on losing weight)
-                </Text>
             </Stack>
             <Box w={{ base: "80%", sm: "60%", md: "50%" }} mb={{ base: 12, md: 0 }}>
                 {/* TODO: Make this change every X secs */}

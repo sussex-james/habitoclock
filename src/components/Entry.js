@@ -36,10 +36,10 @@ const WelcomeScreen = ({onDone}) => <div>
         m="0 auto"
     >
         <Hero
-            title="Get insights on your routines Carbon Impact"
+            title="Get insights on the Carbon Impact of your routine"
             subtitle="Reduce your Carbon Footprint by purposefully choosing which times to change your routine for the most green impact"
             image="https://source.unsplash.com/collection/404339/800x600"
-            ctaText="Help me reduce my footprint"
+            ctaText="Reduce your footprint"
             ctaOnClick={() => onDone()}
         />
     </Flex>
