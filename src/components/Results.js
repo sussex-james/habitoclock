@@ -38,6 +38,16 @@ const Results = ({ results }) => {
   // proofread teext thing
   // ask about fireworks
 
+  let radarData = [];
+  results.map((item) => {
+    let name = item.name + " at " + item.bestTime;
+    radarData.push({
+      name: name,
+      percentDiff: item.percentageDifference * 100,
+    });
+    // % diff
+  });
+
   let barData = [];
   results.map((item) => {
     let name =
@@ -76,7 +86,7 @@ const Results = ({ results }) => {
       </div>
       <div class="flex">
         <ResponsiveContainer width="60%" height={500}>
-          <RadarChart cx="50%" cy="50%" outerRadius="85%" data={barData}>
+          <RadarChart cx="45%" cy="50%" outerRadius="85%" data={barData}>
             <PolarGrid />
             <PolarAngleAxis dataKey="name" />
             <PolarRadiusAxis />
@@ -131,7 +141,7 @@ const Results = ({ results }) => {
             <tr>
               <td>{item.name}</td>
               <td>{item.time}</td>
-              <td>{item.carbon}</td>
+              <td>{item.carbon.toFixed(2)}</td>
             </tr>
           ))}
         </table>
