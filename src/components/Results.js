@@ -9,6 +9,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  Label,
   ResponsiveContainer,
   Radar,
   RadarChart,
@@ -39,14 +40,28 @@ const Results = ({ results }) => {
   // ask about fireworks
 
   let radarData = [];
+  let highestDiff = 0;
   results.map((item) => {
-    let name = item.name + " at " + item.bestTime;
+    if (item.percentageDifference > highestDiff)
+      highestDiff = item.percentageDifference;
+    let name =
+      item.name +
+      " " +
+      item.emoji +
+      " at " +
+      item.bestTime +
+      " instead of " +
+      item.timeRepresentation.hour +
+      ":" +
+      item.timeRepresentation.minute;
     radarData.push({
       name: name,
       percentDiff: item.percentageDifference * 100,
     });
-    // % diff
   });
+
+  highestDiff = highestDiff * 100;
+  highestDiff = Math.round(highestDiff, 0);
 
   let barData = [];
   results.map((item) => {
@@ -86,13 +101,19 @@ const Results = ({ results }) => {
       </div>
       <div class="flex">
         <ResponsiveContainer width="60%" height={500}>
-          <RadarChart cx="45%" cy="50%" outerRadius="85%" data={radarData}>
+          <RadarChart cx="50%" cy="50%" outerRadius="85%" data={radarData}>
             <PolarGrid />
             <PolarAngleAxis dataKey="name" />
-            <PolarRadiusAxis />
+            <PolarRadiusAxis domain={[0, highestDiff]}>
+              <Label position="center">0</Label>
+              <Label position="inside">{highestDiff / 2}</Label>
+              <Label position="outside">
+                {highestDiff + " ( % less carbon consumed )"}
+              </Label>
+            </PolarRadiusAxis>
             <Radar
               name="radarCarbon"
-              dataKey="carbonGramsConsumed"
+              dataKey="percentDiff"
               stroke="#207959"
               fill="#04AA6E"
               fillOpacity={0.65}
@@ -100,7 +121,16 @@ const Results = ({ results }) => {
           </RadarChart>
         </ResponsiveContainer>
         <div class="leftShift">
-          EXPLANATION HERE OF THE GRAPHS ETC. HOW IT WORKS AND STUFF.
+          To the left is a radar chart that shows the most impactful habit
+          changes you can make based on the input data. The first time is the
+          current time you do that habit, and the second time is the optimal
+          time. The value shown on the graph is the % of carbon consumption that
+          you can reduce by switching to the new time!
+          <br />
+          <br />
+          The bar chart and table below show the amount of carbon grams each of
+          your habits consume when performed at the current chosen time, then at
+          the optimal time in the row below.
         </div>
       </div>
       <div class="divide" />
