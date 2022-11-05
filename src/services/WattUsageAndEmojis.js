@@ -1,5 +1,4 @@
-//import {remoteUrl} from '../config/secret.js'
-const remoteUrl = "https://quizscribe.com:3002/logicPythonSpecial/directText";
+import { remoteUrl } from "../config/secret.js";
 
 export const WattUsageAndEmojisService = {
   async getWattUsageAndEmojis(topics) {
